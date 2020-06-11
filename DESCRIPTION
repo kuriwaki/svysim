@@ -1,0 +1,26 @@
+Package: svysim
+Title: Realistic Simulations of Biased Survey Sampling
+Version: 0.0.1
+Authors@R: person(given = "Shiro",
+             family = "Kuriwaki",
+             role = c("aut", "cre"),
+             email = "shirokuriwaki@gmail.com",
+             comment = c(ORCID = "0000-0002-5687-2647"))
+Description: Surveys are used to teach sampling distributions and selection biases
+   all the time, but illustrating a sampling distribution is difficult (because often
+   we only have one survey) and most simulations are unrealistic. This package 
+   provides some ready-made datasets from the CCES and Census-related datasets
+   along with some customizable sampling schemes, using DeclareDesign. 
+License: MIT + file LICENSE
+Suggests: 
+    testthat
+Depends:
+    ccesMRPprep,
+    DeclareDesign,
+    R (>= 2.10)
+Remotes:
+    kuriwaki/ccesMRPprep
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0

@@ -1,0 +1,81 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# svysim
+
+
+The goal of svysim is to facilitate creating realistic simulations of (biased) survey sampling.
+
+## Installation
+
+
+```{r}
+remotes::install_github("kuriwaki/svysim")
+```
+
+## Example
+
+Make a population dataset that expands the common sample via weights. Though the weights are not frequency weights, we treat it as such for simplicity.
+
+```{r}
+pop_wtd <- pop_cces %>% 
+  mutate(weight_rounded = ceiling(weight_cumulative)) %>% 
+  tidyr::uncount(weights = weight_rounded)
+```
+Declare it formally as a population
+
+```{r}
+popn <- DeclareDesign::declare_population(ccc_std)
+```
+
+Pick a propensity score. For example to oversample highly educated, the true propensity score we chose is:
+
+```{r}
+pscore <- p_highed(ccc_std)
+```
+
+
+Take Samples 
+
+```{r}
+```
+
+
+
+Plot the Sampling Distributions
+
+
+```{r}
+library(scales)
+library(glue)
+
+txt <- glue("Truth: {percent(true_pop, accuracy = 0.1)}
+             SRS Mean: {percent(sampling_ests$mean[2], accuracy = 0.1)}
+             Biased Mean: {percent(sampling_ests$mean[1], accuracy = 0.1)}")
+
+sampling_df %>%
+  ggplot(aes(x = muhat, fill = method)) +
+  geom_histogram(alpha = 0.5, aes(y = stat(width*density)), position = position_identity()) +
+  geom_vline(xintercept = true_pop, linetype = "dashed") +
+  annotate("text", x = Inf, y = Inf, label = txt, hjust = 1.2, vjust = 1.2) +
+  theme_minimal() +
+  scale_x_continuous(labels = percent) +
+  labs(x = "Estimated Proportion of Democrats in the Population",
+       fill = "Sampling Method",
+       y = "Proportion",
+       caption = "1000 Independent Polls from the Same Popualation")
+ggsave("slides/sampling.pdf", w = 7, h = 5)
+```
+
