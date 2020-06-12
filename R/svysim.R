@@ -35,6 +35,12 @@ samp_with <- function(population, sampling_f, n) {
 #' Propensity Score that oversamples high education and high-news interest people
 #'
 #'
+#' @details We model the true propensity score as being a separable function of
+#'  race, education, and news interest. There is no explicit correlation between
+#'  selection and the outcome (say, partisanship), so Meng's rho would be non-zero
+#'  only so far as the covariates correlates with race, education, and news interest.
+#'
+#'
 #' @param data A tibble with the columns race, educ, newsint, as coded by the CCES
 #' @param n Sample size to sample
 #'
