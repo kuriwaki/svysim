@@ -127,3 +127,11 @@ sampling_df %>%
        caption = "1000 Independent Polls from the Same Popualation")
 ```
 
+
+
+# Related Packages
+
+- `kuriwaki/ccesMRPprep`
+- `kuriwaki/ddi`
+- `kuriwaki/sparseregMRP`
+- `kuriwaki/synthArea`

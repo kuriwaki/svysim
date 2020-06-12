@@ -120,3 +120,10 @@ sampling_df %>%
 ```
 
 <img src="man/figures/README-sampling-dist-1.png" width="80%" />
+
+# Related Packages
+
+  - `kuriwaki/ccesMRPprep`
+  - `kuriwaki/ddi`
+  - `kuriwaki/sparseregMRP`
+  - `kuriwaki/synthArea`
