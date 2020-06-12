@@ -19,10 +19,14 @@ library(scales)
 library(glue)
 ```
 
-# svysim
+_Abstract_: Surveys are used to teach sampling distributions and selection biases
+   all the time, but illustrating a sampling distribution is difficult (because often
+   we only have one survey) and most simulations are unrealistic. This package 
+   provides some ready-made datasets from the CCES and Census-related datasets
+   along with some customizable sampling schemes, using DeclareDesign. 
+   
 
-
-The goal of svysim is to facilitate creating realistic simulations of (biased) survey sampling.
+The goal of `svysim` is to facilitate creating realistic simulations of (biased) survey sampling.
 
 ## Installation
 
@@ -30,7 +34,7 @@ The goal of svysim is to facilitate creating realistic simulations of (biased) s
 remotes::install_github("kuriwaki/svysim")
 ```
 
-## Example
+## Usage Example
 
 Make a population dataset that expands the common sample via weights. Though the weights are not frequency weights, we treat it as such for simplicity.
 
@@ -38,8 +42,12 @@ Make a population dataset that expands the common sample via weights. Though the
 pop_wtd <- pop_cces %>% 
   mutate(weight_rounded = ceiling(weight_cumulative)) %>% 
   tidyr::uncount(weights = weight_rounded)
+
+pop_wtd
 ```
-Declare it formally as a population
+
+
+Declare it formally as a population using the `DeclareDesign` package.
 
 ```{r}
 popn <- DeclareDesign::declare_population(pop_cces)
@@ -74,7 +82,7 @@ samp1  <- draw_data(popn + declare_sampling(handler = sample_highed, n = 1000))
 stat_dem(samp1)
 ```
 
-Take Multiple Samples
+Take Multiple Samples. This will take several minutes depending on how many independent samples we draw.
 
 ```{r}
 pop_mu <- stat_dem(pop_wtd)
@@ -85,7 +93,7 @@ samps1 <- map_dbl(1:1000, ~ stat_dem(samp_with(popn, sample_highed, 1000)))
 
 Plot the Sampling Distributions
 
-```{r}
+```{r sampling-dist}
 library(scales)
 library(glue)
 
