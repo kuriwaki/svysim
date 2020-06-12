@@ -8,9 +8,15 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  cache = TRUE,
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+library(svysim)
+library(tidyverse)
+library(scales)
+library(glue)
 ```
 
 # svysim
@@ -20,8 +26,7 @@ The goal of svysim is to facilitate creating realistic simulations of (biased) s
 
 ## Installation
 
-
-```{r}
+```{r, eval = FALSE}
 remotes::install_github("kuriwaki/svysim")
 ```
 
@@ -37,45 +42,75 @@ pop_wtd <- pop_cces %>%
 Declare it formally as a population
 
 ```{r}
-popn <- DeclareDesign::declare_population(ccc_std)
+popn <- DeclareDesign::declare_population(pop_cces)
 ```
 
 Pick a propensity score. For example to oversample highly educated, the true propensity score we chose is:
 
 ```{r}
-pscore <- p_highed(ccc_std)
+pscore <- p_highed(pop_wtd)
+```
+
+```{r pscore-histogram, echo = FALSE}
+hist(pscore,
+     breaks = 50, 
+     las = 1,
+     main = "True Propensity Score in the Population", 
+     xlab = "Propensity Score",
+     ylab = "")
 ```
 
 
 Take Samples 
 
 ```{r}
+popn <- declare_population(pop_wtd)
+stat_dem(pop_cces) # true value
+
+samp0  <- draw_data(popn + declare_sampling(handler = sample_srs, n = 1000))
+stat_dem(samp0)
+
+samp1  <- draw_data(popn + declare_sampling(handler = sample_highed, n = 1000))
+stat_dem(samp1)
+```
+
+Take Multiple Samples
+
+```{r}
+pop_mu <- stat_dem(pop_wtd)
+samps0 <- map_dbl(1:1000, ~ stat_dem(samp_with(popn, sample_srs, 1000)))
+samps1 <- map_dbl(1:1000, ~ stat_dem(samp_with(popn, sample_highed, 1000)))
 ```
 
 
-
 Plot the Sampling Distributions
-
 
 ```{r}
 library(scales)
 library(glue)
 
-txt <- glue("Truth: {percent(true_pop, accuracy = 0.1)}
-             SRS Mean: {percent(sampling_ests$mean[2], accuracy = 0.1)}
-             Biased Mean: {percent(sampling_ests$mean[1], accuracy = 0.1)}")
+sampling_df <- bind_rows(
+  tibble(method = "SRS", muhat = samps0),
+  tibble(method = "Biased", muhat = samps1),
+)
+
+txt <- glue("Truth: {percent(pop_mu, accuracy = 0.1)}\n",
+             "SRS Mean: {percent(mean(samps0), accuracy = 0.1)}\n",
+             "Biased Mean: {percent(mean(samps1), accuracy = 0.1)}")
 
 sampling_df %>%
   ggplot(aes(x = muhat, fill = method)) +
-  geom_histogram(alpha = 0.5, aes(y = stat(width*density)), position = position_identity()) +
-  geom_vline(xintercept = true_pop, linetype = "dashed") +
+  geom_histogram(alpha = 0.5, 
+                 aes(y = stat(width*density)), 
+                 position = position_identity(),
+                 bins = 25) +
+  geom_vline(xintercept = pop_mu, linetype = "dashed") +
   annotate("text", x = Inf, y = Inf, label = txt, hjust = 1.2, vjust = 1.2) +
   theme_minimal() +
-  scale_x_continuous(labels = percent) +
+  scale_x_continuous(labels = percent_format(accuracy = 1)) +
   labs(x = "Estimated Proportion of Democrats in the Population",
        fill = "Sampling Method",
        y = "Proportion",
        caption = "1000 Independent Polls from the Same Popualation")
-ggsave("slides/sampling.pdf", w = 7, h = 5)
 ```
 
