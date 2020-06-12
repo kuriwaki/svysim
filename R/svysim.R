@@ -43,6 +43,8 @@ samp_with <- function(population, sampling_f, n) {
 #' @importFrom haven zap_labels
 #' @importFrom brms inv_logit_scaled
 #'
+#' @source Inspired by Lauren Kennedy's code in [rstanarm](https://mc-stan.org/rstanarm/articles/mrp.html)
+#'
 #' @export
 p_highed <- function(data) {
   race_int <- zap_labels(data$race)

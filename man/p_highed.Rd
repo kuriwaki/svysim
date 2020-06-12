@@ -4,6 +4,9 @@
 \alias{p_highed}
 \alias{sample_highed}
 \title{Propensity Score Simulation}
+\source{
+Inspired by Lauren Kennedy's code in \href{https://mc-stan.org/rstanarm/articles/mrp.html}{rstanarm}
+}
 \usage{
 p_highed(data)
 
