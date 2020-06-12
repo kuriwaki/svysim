@@ -1,15 +1,17 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+The goal of `svysim` is to facilitate creating realistic simulations of
+(biased) survey sampling.
+
 *Abstract*: Surveys are used to teach sampling distributions and
 selection biases all the time, but illustrating a sampling distribution
 is difficult (because often we only have one survey) and most
-simulations are unrealistic. This package provides some ready-made
+simulations are unrealistic (because they draw from a population with
+uncorrelated random variables, or because they assume a simple random
+sample from that population. This package provides some ready-made
 datasets from the CCES and Census-related datasets along with some
 customizable sampling schemes, using DeclareDesign.
-
-The goal of `svysim` is to facilitate creating realistic simulations of
-(biased) survey sampling.
 
 ## Installation
 
