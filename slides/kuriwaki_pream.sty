@@ -1,0 +1,232 @@
+\mode<presentation>
+\usecolortheme{dove}
+
+% https://tex.stackexchange.com/a/83485/153676
+\errorcontextlines 10000
+
+
+% Packages ===============================================
+\usepackage{graphicx} 
+\usepackage{array}
+\usepackage{booktabs} % table lines
+\usepackage[most]{tcolorbox} % slick boxes
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{setspace}
+\usepackage{changepage}
+\usepackage{appendixnumberbeamer}
+
+% Fonts ===
+% Paul GP Font
+\usepackage{pgfpages}
+\usepackage[default]{lato}
+% Fixed width
+\usepackage{inconsolata}
+
+
+% Style Format ==============
+
+\setbeamertemplate{frametitle}
+{
+        \nointerlineskip
+        \begin{beamercolorbox}[sep=0.2cm,wd=\paperwidth]{frametitle}
+        \vbox{}\vskip0ex%
+        \strut\insertframetitle\strut
+        \vskip-0.5ex%
+        \end{beamercolorbox}
+}
+\setbeamerfont{frametitle}{series=\bfseries, size=\large}
+\setbeamercolor{frametitle}{fg = navy, bg=black!0}
+\setbeamertemplate{navigation symbols}{} % no symbols
+
+ \setbeamercolor{item projected}{parent=structure}
+ \setbeamercolor{background canvas}{bg=black!0}
+
+ % Pagenumber ----
+
+\defbeamertemplate{footline}{higher page number}
+{%
+  \hfill%
+  %\usebeamercolor[fg]{page number in head/foot}%
+  %\usebeamerfont{page number in head/foot}%
+  \setbeamercolor{page number in head/foot}{fg=mDarkTeal}
+  \setbeamerfont{page number in head/foot}{size=\Large}
+  \insertframenumber\,$|$\,\inserttotalframenumber\kern1em\vskip10pt%
+}
+
+\setbeamertemplate{footline}[higher page number]
+
+% Section header
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\textbf{\Large\textcolor{navy}{\insertsectionhead}}\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+% minifloat
+% Minipage float
+\newcommand{\floatnote}[1]{\centering\begin{minipage}{\linewidth}\footnotesize\singlespacing\flushleft{#1}\end{minipage}}%
+
+
+% Lists =======
+\newenvironment{wideitemize}{\itemize\addtolength{\itemsep}{10pt}}{\enditemize}
+\newenvironment{wideenumerate}{\enumerate\addtolength{\itemsep}{10pt}}{\endenumerate}
+
+% itemize
+\setbeamertemplate{itemize items}{$\bullet$}
+
+
+% Colors ===============================================
+\usepackage{xcolor}
+\definecolor{dgray}{gray}{0.1} % define color on gray scale
+\definecolor{mgray}{gray}{0.5} % define color on gray scale
+\definecolor{lgray}{gray}{0.9} % define color on gray scale
+\definecolor{light-gray}{gray}{0.89}  
+\definecolor{crimson}{RGB}{204,0,0}
+\definecolor{light-blue}{RGB}{135,206,250}
+\definecolor{steel-blue}{RGB}{96, 147, 172}
+\definecolor{light-red}{RGB}{172, 98, 110}
+\definecolor{light-green}{RGB}{77, 172, 38}
+\definecolor{orange}{RGB}{255,165,0}
+\definecolor{light-orange}{RGB}{254,216,177}
+\definecolor{salmon}{RGB}{250, 128, 114}
+\definecolor{blue}{RGB}{0,114,178}
+\definecolor{deepblue}{RGB}{8,81,156}
+\definecolor{navy}{RGB}{12,44,132}
+\definecolor{red}{RGB}{191,35,0}
+\definecolor{magenta}{RGB}{208, 28, 139}
+\definecolor{yellow}{RGB}{240,228,66}
+\definecolor{green}{RGB}{0,158,115}
+
+\colorlet{tablerowcolor}{light-orange} % Table row separator colour = 10% gray
+\newcommand{\rowcolorange}{\rowcolor{tablerowcolor}} %
+
+\newcommand{\crimson}[1]{\textcolor{crimson}{#1}}
+\newcommand{\deepblue}[1]{\textcolor{deepblue}{#1}}
+\newcommand{\dgray}[1]{\textcolor{dgray}{#1}}
+\newcommand{\rightfoot}[1]{\begin{flushright}\footnotesize\textcolor{mgray}{#1}\end{flushright}}
+\newcommand{\lgray}[1]{\textcolor{lgray}{#1}}
+\newcommand{\mgray}[1]{\textcolor{mgray}{#1}}
+
+
+% hyper -------
+\hypersetup{
+  colorlinks=false,
+  linkbordercolor = {white},
+  linkcolor = {blue}
+}
+
+
+% Math commands ------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{dsfont}
+
+
+\newcommand{\pr}[1]{\mathbb{\Pr}\left(#1\right)}
+\newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+\newcommand{\ind}[1]{\bm{1}\left(#1\right)}
+
+
+\newcommand{\var}{\textnormal{Var}}
+\newcommand{\cov}{\textnormal{Cov}} 
+\newcommand{\cor}{\textnormal{Cor}} 
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\y}{\textsc{y}}
+\newcommand{\x}{\textsc{x}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\sR}{\crimson{R}}
+\newcommand{\sL}{\deepblue{D}}
+\newcommand\norm[1]{\left\lVert#1\right\rVert} % norm enviornment
+\newcommand*{\Scale}[2][4]{\scalebox{#1}{\ensuremath{#2}}}% % larger math
+
+\newcommand{\bth}{\bm{\theta}}
+\newcommand{\bmu}{\bm{\mu}}
+\newcommand{\bpi}{\bm{\pi}}
+\newcommand{\bps}{\bm{\psi}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bY}{\mathbf{Y}}
+\newcommand{\bZ}{\mathbf{Z}}
+
+        
+
+
+
+%%% TIKZ -----------
+\usepackage{tikz}
+\usepackage{venndiagram}
+\usetikzlibrary{matrix,shapes,arrows,fit,tikzmark}
+
+% Figures with encircling letters
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=circle, inner sep=0] {\strut \textit{#1}};}
+
+
+% https://github.com/paulgp/beamer-tips/blob/master/slides.pdf
+\tikzset{   
+  every picture/.style={remember picture,baseline},
+  every node/.style={anchor=base,align=center,outer sep=1.5pt},
+}
+\newcommand\marktopleft[1]{%
+  \tikz[overlay,remember picture] 
+  \node (marker-#1-a) at (-.3em,.3em) {};%
+}
+\newcommand\markbottomright[2]{%
+  \tikz[overlay,remember picture] 
+  \node (marker-#1-b) at (0em,0em) {};%
+}
+\tikzstyle{every picture}+=[remember picture] 
+\tikzstyle{mybox} =[draw=black, very thick, rectangle, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[draw=black,fill=red, text=white]
+
+
+
+% Tables -----------
+
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{dcolumn}
+\newcolumntype{d}[0]{D{.}{.}{5}}
+
+% Tabular X special row types
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X} 
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{G}{>{\columncolor{lgray}}C}
+
+\newcolumntype{s}{>{\hsize=0.5\hsize}L}
+
+% tcolorbox cells
+\tcbset{nobeforeafter,size=small}
+\tcbset{tcbox raise base}
+
+\newcommand\bfheading[1]{%
+  \par\bigskip
+  {\bfseries#1}\par\medskip}
+
+\newcommand\itheading[1]{%
+  \par\bigskip
+  {\itshape#1}\par\medskip}
+
+
+% row color
+% https://tex.stackexchange.com/questions/412983/coloring-the-text-of-the-entire-row-in-a-table
+\makeatletter
+\g@addto@macro{\endtabular}{\rowfont{}}% Clear row font
+\makeatother
+\newcommand{\rowfonttype}{}% Current row font
+\newcommand{\rowfont}[1]{% Set current row font
+\gdef\rowfonttype{#1}#1\ignorespaces%
+}
+\makeatother
+
