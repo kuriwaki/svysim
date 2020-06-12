@@ -59,7 +59,7 @@ Pick a propensity score. For example to oversample highly educated, the true pro
 pscore <- p_highed(pop_wtd)
 ```
 
-```{r pscore-histogram, echo = FALSE}
+```{r pscore-histogram, echo = FALSE, out.width = '50%'}
 hist(pscore,
      breaks = 50, 
      las = 1,
@@ -93,7 +93,7 @@ samps1 <- map_dbl(1:1000, ~ stat_dem(samp_with(popn, sample_highed, 1000)))
 
 Plot the Sampling Distributions
 
-```{r sampling-dist}
+```{r sampling-dist, out.width = '80%'}
 library(scales)
 library(glue)
 

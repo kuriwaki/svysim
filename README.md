@@ -59,7 +59,7 @@ true propensity score we chose is:
 pscore <- p_highed(pop_wtd)
 ```
 
-<img src="man/figures/README-pscore-histogram-1.png" width="100%" />
+<img src="man/figures/README-pscore-histogram-1.png" width="50%" />
 
 Take Samples
 
@@ -117,4 +117,4 @@ sampling_df %>%
        caption = "1000 Independent Polls from the Same Popualation")
 ```
 
-<img src="man/figures/README-sampling-dist-1.png" width="100%" />
+<img src="man/figures/README-sampling-dist-1.png" width="80%" />
