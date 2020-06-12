@@ -15,11 +15,9 @@ License: MIT + file LICENSE
 Suggests: 
     testthat
 Depends:
-    ccesMRPprep,
     DeclareDesign,
+    brms,
     R (>= 2.10)
-Remotes:
-    kuriwaki/ccesMRPprep
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

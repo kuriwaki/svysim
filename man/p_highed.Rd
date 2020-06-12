@@ -20,16 +20,3 @@ A vector of propensity scores ranging from 0 to 1
 \description{
 Propensity Score that oversamples high education and high-news interest people
 }
-\examples{
-
-popn <- declare_population(pop_cces)
-
-report_pid_dem(pop_cces)
-
-samp0  <- draw_data(popn + declare_sampling(handler = sample_srs, n = 1000))
-report_pid_dem(samp0)
-
-samp1  <- draw_data(popn + declare_sampling(handler = sample_highed, n = 1000))
-report_pid_dem(samp1)
-
-}

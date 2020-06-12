@@ -1,8 +1,33 @@
-library(DeclareDesign)
-library(foreach)
-library(haven)
-library(tidyverse)
-library(ccesMRPprep)
+#' Sample with custom function
+#'
+#'
+#' @param population An object defined by \link{DeclareDesign::declare_design}. See
+#' help page here.
+#' @param sampling_f A sampling function that can be passed as a handler to
+#' `declare_sampling`.
+#' @param n the sample size to draw
+#'
+#' @importFrom DeclareDesign declare_sampling draw_data
+#'
+#'
+#' @examples
+#'
+#' # Population Value
+#' popn <- declare_population(pop_cces)
+#' stat_dem(pop_cces)
+#'
+#' # SRS
+#' samp0  <- samp_with(popn, sample_srs, n = 1000))
+#' stat_dem(samp0)
+#'
+#' # Oversample Higher-ed
+#' samp1  <- samp_with(popn, sample_highed, n = 1000)
+#' stat_dem(samp1)
+#'
+#' @export
+samp_with <- function(population, sampling_f, n) {
+  draw_data(population + declare_sampling(handler = sampling_f, n = n))
+}
 
 #' Propensity Score Simulation
 #'
@@ -16,18 +41,7 @@ library(ccesMRPprep)
 #' @return A vector of propensity scores ranging from 0 to 1
 #'
 #' @importFrom haven zap_labels
-#'
-#' @examples
-#'
-#' popn <- declare_population(pop_cces)
-#'
-#' report_pid_dem(pop_cces)
-#'
-#' samp0  <- draw_data(popn + declare_sampling(handler = sample_srs, n = 1000))
-#' report_pid_dem(samp0)
-#'
-#' samp1  <- draw_data(popn + declare_sampling(handler = sample_highed, n = 1000))
-#' report_pid_dem(samp1)
+#' @importFrom brms inv_logit_scaled
 #'
 #' @export
 p_highed <- function(data) {
@@ -57,7 +71,7 @@ sample_highed <- function(data, n) {
 #' @importFrom dplyr sample_n
 #'
 #' @export
-p_srs <- function(data, n) {
+sample_srs <- function(data, n) {
   sample_n(data, n)
 }
 
@@ -66,7 +80,7 @@ p_srs <- function(data, n) {
 #' @param tbl A dataframe with the variable pid3_leaner
 #'
 #' @return A scalar, in this case the proportion of Democrats (including leaners)
-#'
-report_pid_dem <- function(tbl) {
-  prop.table(table(tbl$pid3_leaner))[1]
+#' @export
+stat_dem <- function(tbl) {
+  as.numeric(prop.table(table(tbl$pid3_leaner))[1])
 }
