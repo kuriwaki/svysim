@@ -7,8 +7,8 @@
 samp_with(population, sampling_f, n)
 }
 \arguments{
-\item{population}{An object defined by \link{DeclareDesign::declare_design}. See
-help page here.}
+\item{population}{A dataframe, which will be wrapped internally around \link{DeclareDesign::declare_design}.
+See help page here.}
 
 \item{sampling_f}{A sampling function that can be passed as a handler to
 \code{declare_sampling}.}
@@ -21,15 +21,14 @@ Sample with custom function
 \examples{
 
 # Population Value
-popn <- declare_population(pop_cces)
 stat_dem(pop_cces)
 
 # SRS
-samp0  <- samp_with(popn, sample_srs, n = 1000))
+samp0  <- samp_with(pop_cces, sample_srs, n = 1000))
 stat_dem(samp0)
 
 # Oversample Higher-ed
-samp1  <- samp_with(popn, sample_highed, n = 1000)
+samp1  <- samp_with(pop_cces, sample_highed, n = 1000)
 stat_dem(samp1)
 
 }
