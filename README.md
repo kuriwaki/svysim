@@ -58,25 +58,29 @@ Pick a propensity score. For example to oversample highly educated, the
 true propensity score we chose is:
 
 ``` r
-pscore <- p_highed(pop_wtd)
+pscore_highed <- p_highed(pop_wtd)
+pscore_eddem <- p_eddem(pop_wtd)
 ```
 
-<img src="man/figures/README-pscore-histogram-1.png" width="50%" />
+<img src="man/figures/README-pscore-histogram-1.png" width="90%" />
 
-Take Samples
+Take Samples, e.g. a 0.1 percent sample with no replacement
 
 ``` r
-popn <- declare_population(pop_wtd)
-stat_dem(pop_cces) # true value
-#> [1] 0.4655933
+stat_dem(pop_wtd) # true value
+#> [1] 0.4625601
 
-samp0  <- draw_data(popn + declare_sampling(handler = sample_srs, n = 1000))
+samp0  <- samp_with(pop_wtd, sample_srs, n = 600)
 stat_dem(samp0)
-#> [1] 0.468
+#> [1] 0.4783333
 
-samp1  <- draw_data(popn + declare_sampling(handler = sample_highed, n = 1000))
+samp1  <- samp_with(pop_wtd, sample_highed, n = 600)
 stat_dem(samp1)
-#> [1] 0.463
+#> [1] 0.465
+
+samp2  <- samp_with(pop_wtd, sample_eddem, n = 600)
+stat_dem(samp2)
+#> [1] 0.4333333
 ```
 
 Take Multiple Samples. This will take several minutes depending on how
@@ -84,8 +88,11 @@ many independent samples we draw.
 
 ``` r
 pop_mu <- stat_dem(pop_wtd)
-samps0 <- map_dbl(1:1000, ~ stat_dem(samp_with(popn, sample_srs, 1000)))
-samps1 <- map_dbl(1:1000, ~ stat_dem(samp_with(popn, sample_highed, 1000)))
+n_surveys <- 500
+n_samp <- 600
+samps0 <- map_dbl(1:n_surveys, ~ stat_dem(samp_with(pop_wtd, sample_srs, n_samp)))
+samps1 <- map_dbl(1:n_surveys, ~ stat_dem(samp_with(pop_wtd, sample_highed, n_samp)))
+samps2 <- map_dbl(1:n_surveys, ~ stat_dem(samp_with(pop_wtd, sample_eddem, n_samp)))
 ```
 
 Plot the Sampling Distributions
@@ -96,12 +103,15 @@ library(glue)
 
 sampling_df <- bind_rows(
   tibble(method = "SRS", muhat = samps0),
-  tibble(method = "Biased", muhat = samps1),
-)
+  tibble(method = "Education Bias", muhat = samps1),
+  tibble(method = "Ed. + PID Bias", muhat = samps2),
+) %>% 
+  mutate(method = fct_inorder(method))
 
 txt <- glue("Truth: {percent(pop_mu, accuracy = 0.1)}\n",
              "SRS Mean: {percent(mean(samps0), accuracy = 0.1)}\n",
-             "Biased Mean: {percent(mean(samps1), accuracy = 0.1)}")
+             "Educaton Biased Mean: {percent(mean(samps1), accuracy = 0.1)}\n",
+            "Ed. + PID Biased Mean: {percent(mean(samps2), accuracy = 0.1)}")
 
 sampling_df %>%
   ggplot(aes(x = muhat, fill = method)) +
@@ -110,16 +120,17 @@ sampling_df %>%
                  position = position_identity(),
                  bins = 25) +
   geom_vline(xintercept = pop_mu, linetype = "dashed") +
-  annotate("text", x = Inf, y = Inf, label = txt, hjust = 1.2, vjust = 1.2) +
+  annotate("text", x = pop_mu, y = Inf, label = txt, 
+           hjust = 0, vjust = 1.2) +
   theme_minimal() +
   scale_x_continuous(labels = percent_format(accuracy = 1)) +
   labs(x = "Estimated Proportion of Democrats in the Population",
        fill = "Sampling Method",
        y = "Proportion",
-       caption = "1000 Independent Polls from the Same Popualation")
+       caption = glue("{n_surveys} independent polls (each n = {n_samp}) from the same popualation"))
 ```
 
-<img src="man/figures/README-sampling-dist-1.png" width="80%" />
+<img src="man/figures/README-sampling-dist-1.png" width="90%" />
 
 # Related Packages
 
