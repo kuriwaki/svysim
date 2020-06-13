@@ -70,19 +70,19 @@ p_eddem <- function(data) {
   news_int <- zap_labels(data$newsint)
   pid3_int <- zap_labels(data$pid3_leaner)
 
-  inv_logit_scaled(-10 +
+  inv_logit_scaled(-8 +
                      c(0, 2)[urb_int] +
                      c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5)[race_int] +
                      c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0)[educ_int] +
                      c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardley" = 0.3)[news_int] +
-                     c("D" = 10, "R" = 1, "I" = 0.8, rep(NA, 4), "DK" = 0.8)[pid3_int])
+                     c("D" = 1.2, "R" = 1, "I" = 0.8, rep(NA, 4), "DK" = 0.8)[pid3_int])
 }
 
 #' @rdname p_eddem
 #'
 #' @export
 sample_eddem <- function(data, n) {
-  pscore <- p_highed(data)
+  pscore <- p_eddem(data)
   sampled_ind <- sample.int(n = nrow(data), size = n, replace = FALSE, prob = pscore)
   data[sampled_ind, ]
 }
@@ -97,4 +97,18 @@ sample_eddem <- function(data, n) {
 #' @export
 sample_srs <- function(data, n) {
   sample_n(data, n)
+}
+
+
+#' Sample with custom propensity score variable
+#'
+#' @param varname column name which contains the propensity score, unquoted.
+#' @param n sample size
+#'
+#' @export
+sample_pscore <- function(data, varname, n) {
+  varname <- enquo(varname)
+  pscore <- pull(data, !!varname)
+  sampled_ind <- sample.int(n = nrow(data), size = n, replace = FALSE, prob = pscore)
+  data[sampled_ind, ]
 }

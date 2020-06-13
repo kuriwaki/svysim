@@ -4,7 +4,7 @@
 \alias{samp_with}
 \title{Sample with custom function}
 \usage{
-samp_with(population, sampling_f, n)
+samp_with(population, sampling_f, n, ...)
 }
 \arguments{
 \item{population}{A dataframe, which will be wrapped internally around \link{DeclareDesign::declare_design}.

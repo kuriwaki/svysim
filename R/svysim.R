@@ -24,8 +24,8 @@
 #' stat_dem(samp1)
 #'
 #' @export
-samp_with <- function(population, sampling_f, n) {
+samp_with <- function(population, sampling_f, n, ...) {
   population <- declare_population(population)
-  draw_data(population + declare_sampling(handler = sampling_f, n = n))
+  draw_data(population + declare_sampling(handler = sampling_f, n = n, ...))
 }
 
