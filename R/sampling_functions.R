@@ -26,13 +26,16 @@
 #' @export
 #'
 p_highed <- function(data) {
+  urb_int <- (data$cd %in% urban_CDs) + 1 # FALSE = 1, TRUE = 2
   race_int <- zap_labels(data$race)
   educ_int <- zap_labels(data$educ)
   news_int <- zap_labels(data$newsint)
 
-  inv_logit_scaled(-4 + c(1/(1:5)*c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5))[race_int] +
-                     (1/(1:4)*c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0))[educ_int] +
-                     (1/(1:4)*c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardley" = 0.3))[news_int])
+  inv_logit_scaled(-8 +
+                     c(2, 0)[urb_int] +
+                     c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5)[race_int] +
+                     c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0)[educ_int] +
+                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardley" = 0.3)[news_int])
 }
 
 #' @rdname p_eddem
@@ -61,15 +64,18 @@ sample_highed <- function(data, n) {
 #'
 #' @export
 p_eddem <- function(data) {
+  urb_int <- (data$cd %in% urban_CDs) + 1 # FALSE = 1, TRUE = 2
   race_int <- zap_labels(data$race)
   educ_int <- zap_labels(data$educ)
   news_int <- zap_labels(data$newsint)
   pid3_int <- zap_labels(data$pid3_leaner)
 
-  inv_logit_scaled(-4 + c(1/(1:5)*c(1, 0.8, 0.7, 0.6, 0.5))[race_int] +
-                     (1/(1:4)*c(0.5, 1.2, 4, 5))[educ_int] +
-                     (1/(1:4)*c(4.0, 1, 0.4, 0.3))[news_int] +
-                     (1/(1:8)*c(3.0, 1, 1, rep(NA, 4), 1))[pid3_int])
+  inv_logit_scaled(-10 +
+                     c(0, 2)[urb_int] +
+                     c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5)[race_int] +
+                     c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0)[educ_int] +
+                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardley" = 0.3)[news_int] +
+                     c("D" = 10, "R" = 1, "I" = 0.8, rep(NA, 4), "DK" = 0.8)[pid3_int])
 }
 
 #' @rdname p_eddem
