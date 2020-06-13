@@ -5,21 +5,24 @@
 \alias{pop_cces}
 \title{CCES Sample that can be used as a quasi-sample}
 \format{
-A dataset of 402480 observations and 13 columns.
+A dataset of 402480 observations and 15 columns.
 See the CCES cumulative codebook for more explanation of the variables.
 
 \describe{
 \item{year}{Year of the common content}
 \item{case_id}{Respondent identifier (unique within each year)}
 \item{state}{State (in the form of \code{state.name})}
-\item{cd}{Congressional district at the time of the survey. See \link{ccc_std_demographics}
-for how it is and should be standardized.}
+\item{cd}{Congressional district at the time of the survey.}
 \item{gender}{Gender (equivalent to sex in ACS for the purposes of this package)}
 \item{age}{Age, in integers}
 \item{race}{Race and ethnicity}
 \item{educ}{Education level}
 \item{newsint}{Frequency of following the news}
 \item{pid3_leaner}{Partisan Identification}
+\item{Y}{A simulated continuous outcome. See the source file \code{data-raw} for exact
+simulation}
+\item{Z}{A simulated binary outcome, sampled from passing \code{Y} with a inverse logit
+link and using its probailities.}
 }
 }
 \source{
