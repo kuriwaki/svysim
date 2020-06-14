@@ -21,7 +21,7 @@
 #' @source Inspired by Lauren Kennedy's code in [rstanarm](https://mc-stan.org/rstanarm/articles/mrp.html)
 #'
 #' @examples
-#' p_highed(sample_n(pop_cces, 100))
+#' p_highed(samp_n(pop_cces, 100))
 #'
 #' @export
 #'
@@ -41,7 +41,7 @@ p_highed <- function(data) {
 #' @rdname p_eddem
 #'
 #' @export
-sample_highed <- function(data, n) {
+samp_highed <- function(data, n) {
   pscore <- p_highed(data)
   sampled_ind <- sample.int(n = nrow(data), size = n, replace = FALSE, prob = pscore)
   data[sampled_ind, ]
@@ -60,7 +60,7 @@ sample_highed <- function(data, n) {
 #' @inherit p_highed
 #'
 #' @examples
-#' p_eddem(sample_n(pop_cces, 100))
+#' p_eddem(samp_n(pop_cces, 100))
 #'
 #' @export
 p_eddem <- function(data) {
@@ -81,7 +81,7 @@ p_eddem <- function(data) {
 #' @rdname p_eddem
 #'
 #' @export
-sample_eddem <- function(data, n) {
+samp_eddem <- function(data, n) {
   pscore <- p_eddem(data)
   sampled_ind <- sample.int(n = nrow(data), size = n, replace = FALSE, prob = pscore)
   data[sampled_ind, ]
@@ -95,7 +95,7 @@ sample_eddem <- function(data, n) {
 #' @importFrom dplyr sample_n
 #'
 #' @export
-sample_srs <- function(data, n) {
+samp_srs <- function(data, n) {
   sample_n(data, n)
 }
 
@@ -106,7 +106,7 @@ sample_srs <- function(data, n) {
 #' @param n sample size
 #'
 #' @export
-sample_pscore <- function(data, varname, n) {
+samp_pscore <- function(data, varname, n) {
   varname <- enquo(varname)
   pscore <- pull(data, !!varname)
   sampled_ind <- sample.int(n = nrow(data), size = n, replace = FALSE, prob = pscore)

@@ -27,6 +27,6 @@ selection and the outcome (say, partisanship), so Meng's rho would be non-zero
 only so far as the covariates correlates with race, education, and news interest.
 }
 \examples{
-p_highed(sample_n(pop_cces, 100))
+p_highed(samp_n(pop_cces, 100))
 
 }
