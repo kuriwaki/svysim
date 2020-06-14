@@ -12,6 +12,7 @@
 #' See the CCES cumulative codebook for more explanation of the variables.
 #'
 #' \describe{
+#'   \item{ID}{Identifier by DeclareDesign}
 #'   \item{year}{Year of the common content}
 #'   \item{case_id}{Respondent identifier (unique within each year)}
 #'   \item{state}{State (in the form of \code{state.name})}

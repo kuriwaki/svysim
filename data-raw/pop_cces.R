@@ -28,13 +28,11 @@ pop_y <- fabricate(data = mutate_if(pop_cces_lbl, is.labelled, as_factor),
           Y = (XB - 0.2*bin_st + 0.8*bin_cd + 2*rnorm(N, sd = 5))/10,
           Z = draw_binomial(link = "logit", latent = Y)) %>%
   as_tibble() %>%
-  select(Y, Z)
+  select(ID, Y, Z)
 
 stopifnot(nrow(pop_y) == nrow(pop_cces_lbl))
-pop_cces <- bind_cols(pop_cces_lbl, pop_y)
-
-samp <- samp_with(declare_population(pop_cces), sampling_f = sample_highed, n = 10000)
-glm(Z ~ gender + educ + race + pid3_leaner, binomial, mutate_if(samp, is.labelled, as_factor)) %>%
-  summary()
+pop_cces <- bind_cols(pop_cces_lbl, pop_y) %>%
+  select(-matches("weight")) %>%
+  relocate(ID)
 
 usethis::use_data(pop_cces, overwrite = TRUE)
