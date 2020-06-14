@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  cache = TRUE,
+  cache = FALSE,
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -61,40 +61,41 @@ popn <- DeclareDesign::declare_population(pop_cces)
 Pick a propensity score. For example to oversample highly educated, the true propensity score we chose is:
 
 ```{r}
-pscore_highed <- p_highed(pop_wtd)
-pscore_eddem <- p_eddem(pop_wtd)
+pop_psc <- pop_wtd %>% 
+  mutate(
+    psc_highed = p_highed(.data),
+    psc_eddem  = p_eddem(.data),
+  )
 ```
 
 ```{r pscore-histogram, echo = FALSE, out.width = '90%'}
-par(mfrow = c(1, 2))
-hist(pscore_highed,
-     breaks = 50, 
-     las = 1,
-     main = "High Ed\nOversample", 
-     xlab = "Propensity Score",
-     ylab = "")
-hist(pscore_eddem,
-     breaks = 50, 
-     las = 1,
-     main = "High Ed and Democrat\nOversample", 
-     xlab = "Propensity Score",
-     ylab = "")
 
+pop_psc %>% 
+  select(matches("psc")) %>% 
+  pivot_longer(everything()) %>%
+  mutate(pscore = recode_factor(name, 
+                                psc_highed = "Education Oversample",
+                                psc_eddem = "Education + Dem Oversample")) %>% 
+  ggplot(aes(x = value, y = stat(width*density))) +
+  facet_grid(~ pscore) +
+  geom_histogram(bins = 50) +
+  labs(x = "Propensity Score", 
+       y = "Proportion")
 ```
 
 
-Take Samples, e.g. a 0.1 percent sample with no replacement
+Take samples, e.g. a 0.1 percent sample with no replacement
 
 ```{r}
 stat_dem(pop_wtd) # true value
 
-samp0  <- samp_with(pop_wtd, sample_srs, n = 600)
+samp0  <- samp_with(pop_psc, samp_srs, n = 600)
 stat_dem(samp0)
 
-samp1  <- samp_with(pop_wtd, sample_highed, n = 600)
+samp1  <- samp_with(pop_psc, samp_pscore, varname = psc_highed, n = 600)
 stat_dem(samp1)
 
-samp2  <- samp_with(pop_wtd, sample_eddem, n = 600)
+samp2  <- samp_with(pop_psc, samp_pscore, varname = psc_eddem, n = 600)
 stat_dem(samp2)
 ```
 
@@ -102,17 +103,19 @@ Take Multiple Samples. This will take several minutes depending on how many inde
 
 ```{r}
 pop_mu <- stat_dem(pop_wtd)
-n_surveys <- 500
+n_surveys <- 1000
 n_samp <- 600
-samps0 <- map_dbl(1:n_surveys, ~ stat_dem(samp_with(pop_wtd, sample_srs, n_samp)))
-samps1 <- map_dbl(1:n_surveys, ~ stat_dem(samp_with(pop_wtd, sample_highed, n_samp)))
-samps2 <- map_dbl(1:n_surveys, ~ stat_dem(samp_with(pop_wtd, sample_eddem, n_samp)))
+samps0 <- map_dbl(1:n_surveys, function(x) stat_dem(samp_with(pop_psc, samp_srs, n_samp)))
+samps1 <- map_dbl(1:n_surveys, 
+                  function(x) stat_dem(samp_with(pop_psc, samp_pscore, varname = psc_highed, n = n_samp)))
+samps2 <- map_dbl(1:n_surveys, 
+                  function(x) stat_dem(samp_with(pop_psc, samp_pscore, varname = psc_eddem, n = n_samp)))
 ```
 
 
 Plot the Sampling Distributions
 
-```{r sampling-dist, out.width = '90%'}
+```{r sampling-dist, out.width = '90%', echo =FALSE}
 library(scales)
 library(glue)
 
