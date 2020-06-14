@@ -16,7 +16,7 @@
 #' stat_dem(pop_cces)
 #'
 #' # SRS
-#' samp0  <- samp_with(pop_cces, sample_srs, n = 1000))
+#' samp0  <- samp_with(pop_cces, sample_srs, n = 1000)
 #' stat_dem(samp0)
 #'
 #' # Oversample Higher-ed

@@ -31,11 +31,11 @@ p_highed <- function(data) {
   educ_int <- zap_labels(data$educ)
   news_int <- zap_labels(data$newsint)
 
-  inv_logit_scaled(-8 +
+  inv_logit_scaled(-6 +
                      c(2, 0)[urb_int] +
                      c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5)[race_int] +
                      c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0)[educ_int] +
-                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardley" = 0.3)[news_int])
+                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardly" = 0.3)[news_int])
 }
 
 #' @rdname p_eddem
@@ -74,8 +74,8 @@ p_eddem <- function(data) {
                      c(0, 2)[urb_int] +
                      c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5)[race_int] +
                      c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0)[educ_int] +
-                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardley" = 0.3)[news_int] +
-                     c("D" = 1.2, "R" = 1, "I" = 0.8, rep(NA, 4), "DK" = 0.8)[pid3_int])
+                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardly" = 0.3)[news_int] +
+                     c("D" = 1.25, "R" = 1, "I" = 0.75, rep(NA, 4), "DK" = 0.8)[pid3_int])
 }
 
 #' @rdname p_eddem

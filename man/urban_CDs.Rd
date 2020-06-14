@@ -3,7 +3,7 @@
 \docType{data}
 \name{urban_CDs}
 \alias{urban_CDs}
-\title{Districts that are classified as "pure urban" by CityLab's 2018 classification}
+\title{List of Urban Congressional Districts}
 \format{
 An object of class \code{character} of length 34.
 }

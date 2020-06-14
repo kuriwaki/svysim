@@ -34,5 +34,10 @@
 "pop_cces"
 
 
+#' List of Urban Congressional Districts
+#'
+#'
 #' Districts that are classified as "pure urban" by CityLab's 2018 classification
+#'
+#'
 "urban_CDs"
