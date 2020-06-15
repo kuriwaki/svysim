@@ -91,16 +91,16 @@ where e.g. White$_{i}$ is an indicator variable for whether respondent \(i\) is 
 \begin{frame}
 {Simulated Outcome}
 \begin{align*}
-Y_i =& \frac{1}{10}(-3 + A_i -0.2 B_i + 0.8 C_i + 2u_i)\\
+Y_i =& \frac{1}{10}(-3 + A_i + 0.2 B_i + 0.8 C_i + u_i)\\
 Z_i =& \text{ invlogit}(Y_i)
 \end{align*}
 
 where:
 \begin{align*}
 A_i &= 0.5\log(\text{Age}_i) -2\mathds{1}(\text{White Male Non-Postgrad}_i) + 2(\text{Follow News}_i) + \begin{bmatrix}0\\1.5\\-0.5\end{bmatrix}^\top\begin{bmatrix}\text{Dem}_{i}\\\text{Indep}_i\\\text{GOP}_i\end{bmatrix}\\
-B_i &\sim \text{Bern}(\pi_{\text{state}[i]}), \text{ such that }  ICC = 0.1\\
+B_i &\sim \text{Bern}(\pi_{\text{state}[i]}), \text{ such that }  ICC = 0.15\\
 C_i &\sim \text{Bern}(\pi_{\text{district}[i]}), \text{ such that }  ICC = 0.3\\
-u_i &\sim \mathcal{N}(0, 5)
+u_i &\sim \mathcal{t}(0, \text{df} = 5)
 \end{align*}
 
 \normalsize

@@ -23,9 +23,9 @@ pop_y <- fabricate(data = mutate_if(pop_cces_lbl, is.labelled, as_factor),
           prob_indiv = inv_logit_scaled(XB),
           prob_stavg = ave(prob_indiv, state),
           prob_cdavg = ave(prob_indiv, cd),
-          bin_st = draw_binary_icc(prob_stavg, clusters = state, ICC = 0.1),
-          bin_cd = draw_binary_icc(prob_cdavg, clusters = cd, ICC = 0.3),
-          Y = (XB - 0.2*bin_st + 0.8*bin_cd + 2*rnorm(N, sd = 5))/10,
+          bin_st = draw_binary_icc(prob_stavg, clusters = state, ICC = 0.15),
+          bin_cd = draw_binary_icc(prob_cdavg, clusters = cd, ICC = 0.30),
+          Y = (XB + 0.2*bin_st + 0.8*bin_cd + 2*rt(N, df = 5))/10,
           Z = draw_binomial(link = "logit", latent = Y)) %>%
   as_tibble() %>%
   select(ID, Y, Z)
