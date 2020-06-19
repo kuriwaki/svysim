@@ -38,7 +38,7 @@ p_highed <- function(data) {
                      c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardly" = 0.3)[news_int])
 }
 
-#' @rdname p_eddem
+#' @rdname p_highed
 #'
 #' @export
 samp_highed <- function(data, n) {

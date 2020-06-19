@@ -2,12 +2,15 @@
 % Please edit documentation in R/sampling_functions.R
 \name{p_highed}
 \alias{p_highed}
+\alias{samp_highed}
 \title{High News Interest Oversample}
 \source{
 Inspired by Lauren Kennedy's code in \href{https://mc-stan.org/rstanarm/articles/mrp.html}{rstanarm}
 }
 \usage{
 p_highed(data)
+
+samp_highed(data, n)
 }
 \arguments{
 \item{data}{A tibble with the columns race, educ, newsint, as coded by the CCES}
