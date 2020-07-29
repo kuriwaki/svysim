@@ -23,7 +23,9 @@
 #'   \item{educ}{Education level}
 #'   \item{newsint}{Frequency of following the news}
 #'   \item{pid3_leaner}{Partisan Identification}
-#'   \item{Y}{A simulated continuous outcome. See the source file `data-raw` for exact
+#'   \item{ideo5}{Ideology Self-Placement}
+#'   \item{Y}{A simulated continuous outcome that is highly positively correlated with
+#'   liberal and Democratic identification. See the source file `data-raw` for exact
 #'   simulation}
 #'   \item{Z}{A simulated binary outcome, sampled from passing `Y` with a inverse logit
 #'    link and using its probailities.}
