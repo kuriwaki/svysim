@@ -62,7 +62,7 @@ Simulated data are important for demonstrating predictive accuracy and proper co
 \begin{frame}
 {Sampling Functions}
 
-\(p_i = \text{invlogit}(bX)\) where 
+\(p_i = \text{invlogit}(bX)\) where
 
 \bigskip
 
@@ -70,12 +70,12 @@ Simulated data are important for demonstrating predictive accuracy and proper co
 
 \small
 \begin{align*}
- = \left\{-4 + 2\text{Urban}_i + \begin{bmatrix}1.0\\0.8 \\0.7\\ 0.6\\ 0.5\end{bmatrix}^\top\begin{bmatrix}\text{White}_i\\\text{Black}_i\\\text{Hispanic}_i\\\text{Asian}_i\\\text{All Other}_i\\\end{bmatrix} + 
-\begin{bmatrix}4.0\\3.0\\1.2\\0.5\end{bmatrix}^\top\begin{bmatrix}\text{Post-Grad}_i\\\text{4-Year}_i\\\text{Some College}_i\\\text{HS or Less}_i\end{bmatrix}  + 
+ = \left\{-4 + 2\text{Urban}_i + \begin{bmatrix}1.0\\0.8 \\0.7\\ 0.6\\ 0.5\end{bmatrix}^\top\begin{bmatrix}\text{White}_i\\\text{Black}_i\\\text{Hispanic}_i\\\text{Asian}_i\\\text{All Other}_i\\\end{bmatrix} +
+\begin{bmatrix}4.0\\3.0\\1.2\\0.5\end{bmatrix}^\top\begin{bmatrix}\text{Post-Grad}_i\\\text{4-Year}_i\\\text{Some College}_i\\\text{HS or Less}_i\end{bmatrix}  +
 \begin{bmatrix}4.0\\1.0\\ 0.4\\ 0.3\end{bmatrix}^\top\begin{bmatrix}\text{Follow News}_i\\\text{Sometimes}_i\\\text{Now and Then}_i\\\text{Hardly}_i\end{bmatrix}\right\}
 \end{align*}
 \normalsize
-where e.g. White$_{i}$ is an indicator variable for whether respondent \(i\) is White. 
+where e.g. White$_{i}$ is an indicator variable for whether respondent \(i\) is White.
 
 \bigskip
 
@@ -87,9 +87,9 @@ where e.g. White$_{i}$ is an indicator variable for whether respondent \(i\) is 
 \end{align*}
 \end{frame}
 
-
 \begin{frame}
 {Simulated Outcome}
+\vspace{-2em}
 \begin{align*}
 Y_i =& \frac{1}{10}(-3 + A_i + 0.2 B_i + 0.8 C_i + u_i)\\
 Z_i =& \text{ invlogit}(Y_i)
@@ -97,10 +97,10 @@ Z_i =& \text{ invlogit}(Y_i)
 
 where:
 \begin{align*}
-A_i &= 0.5\log(\text{Age}_i) -2\mathds{1}(\text{White Male Non-Postgrad}_i) + 2(\text{Follow News}_i) + \begin{bmatrix}0\\1.5\\-0.5\end{bmatrix}^\top\begin{bmatrix}\text{Dem}_{i}\\\text{Indep}_i\\\text{GOP}_i\end{bmatrix}\\
+A_i =& 0.5\log(\text{Age}_i) -2\mathds{1}(\text{White Male Non-Postgrad}_i) + 2(\text{Follow News}_i)\\ &+\begin{bmatrix}0\\-0.5\\-1.5\end{bmatrix}^\top\begin{bmatrix}\text{Dem}_{i}\\\text{Indep}_i\\\text{GOP}_i\end{bmatrix} + \begin{bmatrix}0\\-1\\-3\\-3\\-4\\-5\end{bmatrix}^\top\begin{bmatrix}\text{V. Liberal}\\\text{Liberal}\\\text{Not Sure}\\\text{Moderate}\\\text{Conservative}\\\text{V. Conservative}\end{bmatrix}\\
 B_i &\sim \text{Bern}(\pi_{\text{state}[i]}), \text{ such that }  ICC = 0.15\\
 C_i &\sim \text{Bern}(\pi_{\text{district}[i]}), \text{ such that }  ICC = 0.3\\
-u_i &\sim \mathcal{t}(0, \text{df} = 5)
+u_i &\sim t(0, \text{df} = 5)
 \end{align*}
 
 \normalsize
