@@ -25,11 +25,12 @@ Propensity Score that oversamples high education and high-news interest people
 }
 \details{
 We model the true propensity score as being a separable function of
-race, education, and news interest. There is no explicit correlation between
+race, education, news interest, and whether or not you are in an urban district.
+There is no explicit correlation between
 selection and the outcome (say, partisanship), so Meng's rho would be non-zero
 only so far as the covariates correlates with race, education, and news interest.
 }
 \examples{
-p_highed(samp_n(pop_cces, 100))
+p_highed(sample_n(pop_cces, 100))
 
 }

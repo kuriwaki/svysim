@@ -5,7 +5,7 @@
 \alias{pop_cces}
 \title{CCES Sample that can be used as a quasi-sample}
 \format{
-A dataset of 402480 observations and 14 columns.
+A dataset of 402220 observations and 17 columns.
 See the CCES cumulative codebook for more explanation of the variables.
 
 \describe{
@@ -20,7 +20,9 @@ See the CCES cumulative codebook for more explanation of the variables.
 \item{educ}{Education level}
 \item{newsint}{Frequency of following the news}
 \item{pid3_leaner}{Partisan Identification}
-\item{Y}{A simulated continuous outcome. See the source file \code{data-raw} for exact
+\item{ideo5}{Ideology Self-Placement}
+\item{Y}{A simulated continuous outcome that is highly positively correlated with
+liberal and Democratic identification. See the source file \code{data-raw} for exact
 simulation}
 \item{Z}{A simulated binary outcome, sampled from passing \code{Y} with a inverse logit
 link and using its probailities.}

@@ -18,11 +18,12 @@
 #'
 #' @importFrom haven zap_labels
 #' @importFrom brms inv_logit_scaled
+#' @importFrom dplyr between
 #'
 #' @source Inspired by Lauren Kennedy's code in [rstanarm](https://mc-stan.org/rstanarm/articles/mrp.html)
 #'
 #' @examples
-#' p_highed(samp_n(pop_cces, 100))
+#' p_highed(sample_n(pop_cces, 100))
 #'
 #' @export
 #'
@@ -61,7 +62,7 @@ samp_highed <- function(data, n) {
 #' @inherit p_highed
 #'
 #' @examples
-#' p_eddem(samp_n(pop_cces, 100))
+#' p_eddem(sample_n(pop_cces, 100))
 #'
 #' @export
 p_eddem <- function(data) {

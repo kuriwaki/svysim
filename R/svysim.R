@@ -7,7 +7,7 @@
 #' `declare_sampling`.
 #' @param n the sample size to draw
 #'
-#' @importFrom DeclareDesign declare_sampling draw_data
+#' @importFrom DeclareDesign declare_sampling draw_data declare_population
 #'
 #'
 #' @examples
