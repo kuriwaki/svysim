@@ -29,6 +29,7 @@ We model the true propensity score as being a separable function of
 race, education, news interest, and party.
 }
 \examples{
+# Takes a dataframe and returns a vector
 p_eddem(sample_n(pop_cces, 100))
 
 }

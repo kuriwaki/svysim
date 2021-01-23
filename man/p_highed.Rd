@@ -31,6 +31,7 @@ selection and the outcome (say, partisanship), so Meng's rho would be non-zero
 only so far as the covariates correlates with race, education, and news interest.
 }
 \examples{
+# Takes a dataframe and returns a vector
 p_highed(sample_n(pop_cces, 100))
 
 }

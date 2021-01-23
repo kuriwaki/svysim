@@ -50,3 +50,5 @@ README_cache
 *.snm
 *.vrb
 inst/doc
+doc
+Meta

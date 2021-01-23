@@ -7,3 +7,5 @@
 ^data-raw$
 ^README_cache$
 ^slides$
+^doc$
+^Meta$
