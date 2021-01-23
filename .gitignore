@@ -49,3 +49,4 @@ README_cache
 *.pre
 *.snm
 *.vrb
+inst/doc

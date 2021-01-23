@@ -1,0 +1,101 @@
+---
+title: "Creating polls with random sample size"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{varying-n}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(svysim)
+```
+
+
+`purrr` to make loops
+
+```{r}
+library(purrr)
+```
+
+
+
+First score the entire pop with a propensity score probability. `pop_cces` is the built-in data. If you just want to use the propensity scores, you're done here.
+
+```{r}
+pop <- pop_cces
+pop$pscore <- p_highed(pop)
+```
+
+
+
+For simulation you might want to create multiple "populations". Let's subset the larger population and create mini "populations" of size 1000. This could be the roster you call off.
+
+
+```{r}
+pops <- map(.x = 1:100, 
+                .f =function(x) sample_n(pop, size = 1000))
+
+```
+
+The `map` function just puts the subsets to a list.
+
+Now we have 100 populations, each with size 1000
+
+```{r}
+class(pops)
+length(pops)
+```
+
+
+
+What if each person in the pop responded with Pr specified in the pscore? Let's define a function that takes the pscore, flips coins with those probabilities, and subsets the data to rows which are success.
+
+```{r}
+#' @param data A dataset of the population
+#' @param prvar The variable name representing the propsensity score
+coinflip_sample <- function(data, prvar = pscore) {
+  prvar <- enquo(prvar)
+  
+  prs <- pull(data, !!prvar)
+  
+  flips <- rbinom(n = nrow(data), size = 1, prob = prs)
+  
+  success_ind <- which(flips == 1)
+  
+  slice(data, success_ind)
+}
+```
+
+
+
+Let's use this function for all the population. For convenience, stack them into a dataset and label the population ID as "poll_id"
+
+```{r}
+samps <- map_dfr(.x = pops,
+                 .f = coinflip_sample, 
+                 .id = "poll_id")
+```
+
+
+
+
+We can now see that each poll is about size 600, relative to the population, 1000.
+
+```{r}
+count(samps, poll_id)
+```
+
+
+```{r}
+samps %>% filter(poll_id == "1")
+```
+
+

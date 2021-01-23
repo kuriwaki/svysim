@@ -13,7 +13,9 @@ Description: Surveys are used to teach sampling distributions and selection bias
    along with some customizable sampling schemes, using DeclareDesign. 
 License: MIT + file LICENSE
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 Depends: 
     R (>= 2.10),
     dplyr
@@ -25,3 +27,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr
