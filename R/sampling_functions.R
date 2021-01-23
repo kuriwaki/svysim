@@ -18,11 +18,11 @@
 #'
 #' @importFrom haven zap_labels
 #' @importFrom brms inv_logit_scaled
-#' @importFrom dplyr between
 #'
 #' @source Inspired by Lauren Kennedy's code in [rstanarm](https://mc-stan.org/rstanarm/articles/mrp.html)
 #'
 #' @examples
+#' # Takes a dataframe and returns a vector
 #' p_highed(sample_n(pop_cces, 100))
 #'
 #' @export
@@ -33,11 +33,11 @@ p_highed <- function(data) {
   educ_int <- zap_labels(data$educ)
   news_int <- zap_labels(data$newsint)
 
-  inv_logit_scaled(-6 +
+  unname(inv_logit_scaled(-6 +
                      c(2, 0)[urb_int] +
                      c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5)[race_int] +
                      c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0)[educ_int] +
-                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardly" = 0.3)[news_int])
+                     c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardly" = 0.3)[news_int]))
 }
 
 #' @rdname p_highed
@@ -62,6 +62,7 @@ samp_highed <- function(data, n) {
 #' @inherit p_highed
 #'
 #' @examples
+#' # Takes a dataframe and returns a vector
 #' p_eddem(sample_n(pop_cces, 100))
 #'
 #' @export
@@ -72,12 +73,12 @@ p_eddem <- function(data) {
   news_int <- zap_labels(data$newsint)
   pid3_int <- zap_labels(data$pid3_leaner)
 
-  inv_logit_scaled(-8 +
+  unname(inv_logit_scaled(-8 +
                      c(0, 2)[urb_int] +
                      c("White" = 1, "Black" = 0.8, "Hispanic" = 0.7, "Asian" = 0.6, "Other" = 0.5)[race_int] +
                      c("No HS" = 0.5, "Some College" = 1.2, "College" = 3.0, "Post-grad" = 4.0)[educ_int] +
                      c("Most" = 4.0, "Often" = 1.0, "Now and Then" = 0.4, "Hardly" = 0.3)[news_int] +
-                     c("D" = 1.25, "R" = 1, "I" = 0.75, rep(NA, 4), "DK" = 0.8)[pid3_int])
+                     c("D" = 1.25, "R" = 1, "I" = 0.75, rep(NA, 4), "DK" = 0.8)[pid3_int]))
 }
 
 #' @rdname p_eddem
